@@ -20,5 +20,19 @@ namespace ServicioSocial.Api.Controllers
         {
             _repository = repository;
         }
+
+        [HttpGet("Name")]
+        public async Task<ActionResult<Usuario>> getByName(string name)
+        {
+            try
+            {
+                var result = await _repository.GetByUserName(name);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
