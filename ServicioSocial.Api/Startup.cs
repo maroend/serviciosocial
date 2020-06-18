@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ServicioSocial.Business.Helpers;
 using ServicioSocial.Business.Models;
 using ServicioSocial.Business.Repositories;
 using ServicioSocial.Business.Repositories.Interfaces;
@@ -31,7 +32,9 @@ namespace ServicioSocial.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<ServicioSocialContext>(options => options.UseInMemoryDatabase(databaseName: "gbm"));
+            services.AddOptions();
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             services.AddSwaggerGen(x =>
             {
@@ -55,6 +58,8 @@ namespace ServicioSocial.Api
             });
 
             app.UseRouting();
+
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseAuthorization();
 

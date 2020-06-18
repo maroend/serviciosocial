@@ -2,48 +2,105 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ServicioSocial.Business.Helpers;
+using Dapper;
+using System.Data.SqlClient;
+using System.Reflection;
+using System.Text;
+using System.Linq;
+using System.ComponentModel;
+using Microsoft.Extensions.Options;
 
 namespace ServicioSocial.Business.Generic
 {
     public class GenericRepository<U> : IGenericRepository<U> where U : class
     {
-        private readonly DbContext _dbContext;
+        private readonly AppSettings _settings;
+        private readonly string _tableName;
 
-        public GenericRepository(DbContext dbContext)
+        public GenericRepository(IOptions<AppSettings> settings, string tableName)
         {
-            _dbContext = dbContext;
+            _settings = settings.Value;
+            _tableName = tableName;
         }
 
         public virtual async Task<bool> Create(U entity)
         {
-            await _dbContext.Set<U>().AddAsync(entity);
-            var result = await _dbContext.SaveChangesAsync();
-            return result > 0;
+            string query = $"INSERT INTO {_tableName} VALUES @entity";
+            using (var connection = new SqlConnection(_settings.Connection))
+            {
+                var affectedRows = await connection.ExecuteAsync(query, new { entity = entity });
+                return affectedRows > 0;
+            }
         }
 
-        public virtual async Task<bool> Delete(int id)
+        public virtual async Task<bool> Delete(long id)
         {
-            var entity = await GetById(id);
-            _dbContext.Set<U>().Remove(entity);
-            var result = await _dbContext.SaveChangesAsync();
-            return result > 0;
+            string query = $"UPDATE {_tableName} SET Activo = 0 WHERE Id = {id}";
+            using (var connection = new SqlConnection(_settings.Connection))
+            {
+                var affectedRows = await connection.ExecuteAsync(query);
+                return affectedRows > 0;
+            }
         }
 
         public virtual async Task<IEnumerable<U>> GetAll()
         {
-            return await _dbContext.Set<U>().ToListAsync();
+            string query = $"SELECT * FROM {_tableName} WHERE Activo = 1";
+            using (var connection = new SqlConnection(_settings.Connection))
+            {
+                var rows = await connection.QueryAsync<U>(query);
+                return rows;
+            }
         }
 
         public virtual async Task<U> GetById(long id)
         {
-            return await _dbContext.Set<U>().FindAsync(id);
+            string query = $"SELECT * FROM {_tableName} WHERE Id = {id}";
+            using (var connection = new SqlConnection(_settings.Connection))
+            {
+                var row = await connection.QueryFirstOrDefaultAsync<U>(query);
+                return row;
+            }
         }
 
-        public virtual async Task<bool> Update(int id, U entity)
+        public virtual async Task<bool> Update(long id, U entity)
         {
-            _dbContext.Set<U>().Update(entity);
-            var result = await _dbContext.SaveChangesAsync();
-            return result > 0;
+            string query = GenerateUpdateQuery(); ;
+            using (var connection = new SqlConnection(_settings.Connection))
+            {
+                var affectedRows = await connection.ExecuteAsync(query, entity);
+                return affectedRows > 0;
+            }
+        }
+
+        private IEnumerable<PropertyInfo> GetProperties => typeof(U).GetProperties();
+
+        private static List<string> GenerateListOfProperties(IEnumerable<PropertyInfo> listOfProperties)
+        {
+            return (from prop in listOfProperties
+                    let attributes = prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
+                    where attributes.Length <= 0 || (attributes[0] as DescriptionAttribute)?.Description != "ignore"
+                    select prop.Name).ToList();
+        }
+        private string GenerateUpdateQuery()
+        {
+            var updateQuery = new StringBuilder($"UPDATE {_tableName} SET ");
+            var properties = GenerateListOfProperties(GetProperties);
+            var exclude = new List<string>() { "Id", "FechaCreacion", "Activo" };
+
+            properties.ForEach(property =>
+            {
+                if (!exclude.Contains(property))
+                {
+                    updateQuery.Append($"{property}=@{property},");
+                }
+            });
+
+            updateQuery.Remove(updateQuery.Length - 1, 1); //remove last comma
+            updateQuery.Append(" WHERE Id=@Id");
+
+            return updateQuery.ToString();
         }
     }
 }

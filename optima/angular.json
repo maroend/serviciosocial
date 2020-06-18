@@ -22,6 +22,7 @@
               "src/favicon.ico"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "node_modules/quill/dist/quill.snow.css",
               "node_modules/dragula/dist/dragula.css",
               "node_modules/leaflet/dist/leaflet.css",
@@ -105,6 +106,7 @@
               "src/assets/cropper/cropper.js"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "node_modules/quill/dist/quill.snow.css",
               "node_modules/dragula/dist/dragula.css",
               "node_modules/leaflet/dist/leaflet.css",

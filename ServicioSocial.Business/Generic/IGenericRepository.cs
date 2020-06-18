@@ -9,7 +9,7 @@ namespace ServicioSocial.Business.Generic
         Task<IEnumerable<U>> GetAll();
         Task<U> GetById(long id);
         Task<bool> Create(U entity);
-        Task<bool> Update(int id, U entity);
-        Task<bool> Delete(int id);
+        Task<bool> Update(long id, U entity);
+        Task<bool> Delete(long id);
     }
 }
