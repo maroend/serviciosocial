@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './shared/admin-layout/admin-layout.component';
+import { AuthLayoutComponent } from './shared/auth-layout/auth-layout.component';
 
 
 const routes: Routes = [{
@@ -16,7 +17,7 @@ const routes: Routes = [{
   }]
 }, {
   path: '',
-  component: AdminLayoutComponent,
+  component: AuthLayoutComponent,
   children: [{
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)

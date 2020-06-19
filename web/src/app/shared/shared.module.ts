@@ -44,13 +44,60 @@ import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { RouterModule } from '@angular/router';
+import { MenuItems } from './menu-items/menu-items';
+import { HorizontalMenuItems } from './menu-items/horizontal-menu-items';
 
 
 
 @NgModule({
   declarations: [AuthLayoutComponent, AdminLayoutComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatTableModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSlideToggleModule,
+    MatSliderModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatStepperModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatNativeDateModule,
+    CdkTableModule,
+    A11yModule,
+    BidiModule,
+    CdkAccordionModule,
+    ObserversModule,
+    OverlayModule,
+    PlatformModule,
+    PortalModule,
+    FlexLayoutModule,
+    FormsModule,
+    RouterModule
   ],
   exports: [
     MatAutocompleteModule,
@@ -95,7 +142,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     PlatformModule,
     PortalModule,
     FlexLayoutModule,
-    FormsModule
-  ]
+    FormsModule,
+    RouterModule
+  ],
+  providers: [ MenuItems, HorizontalMenuItems ]
 })
 export class SharedModule { }

@@ -1,1 +1,26 @@
-<p>dashboard works!</p>
+<div class="column" fxFlex="100">
+    <mat-card>
+        <div class="wheather-widget text-center grad-blue">
+            <div class="wheather-today">
+                <h3 class="mb-3">Today</h3>
+                <i class="wi wi-day-cloudy mat-text-accent"></i>
+                <h3>13 &#8451;</h3>
+                Surrey, Canada
+            </div>
+            <div class="wheather-future">
+                <div fxLayout="row wrap">
+                <div fxFlex.gt-sm="50%" fxFlex="100" class="m-gap p-gap wheather-child">
+                    <p>Yesterday</p>
+                    <i class="wi wi-day-rain-mix mb-2"></i>
+                    <h3>13 &#8451;</h3>
+                </div>
+                <div fxFlex.gt-sm="50%" fxFlex="100" class="m-gap p-gap wheather-child">
+                    <p>Tomorrow</p>
+                    <i class="wi wi-day-cloudy-high mb-2"></i>
+                    <h3>13 &#8451;</h3>
+                </div>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>
