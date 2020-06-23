@@ -36,6 +36,14 @@ namespace ServicioSocial.Api
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+            services.AddTransient<IAreasAccionRepository, AreasAccionRepository>();
+            services.AddTransient<IContactosRepository, ContactosRepository>();
+            services.AddTransient<IIntegrantesPatronatoRepository, IntegrantesPatronatoRepository>();
+            services.AddTransient<IOrganizacionesAreasAccionRepository, OrganizacionesAreasAccionRepository>();
+            services.AddTransient<IOrganizacionesRepository, OrganizacionesRepository>();
+            services.AddTransient<IOrganizacionesRubrosRepository, OrganizacionesRubrosRepository>();
+            services.AddTransient<IRubrosRepository, RubrosRepository>();
+            services.AddTransient<IVSepomexRepository, VSepomexRepository>();
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new OpenApiInfo { Title = "MyApi", Version = "v1" });
