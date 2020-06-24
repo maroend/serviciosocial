@@ -33,10 +33,11 @@ namespace ServicioSocial.Business.Repositories
 
         public override async Task<bool> Create(Organizaciones entity)
         {
-            var result = await base.Create(entity);
+            var result = await base.CreateId(entity);
 
-            if (result)
+            if (result>0)
             {
+                entity.Id= result;
                 foreach (OrganizacionesAreasAccion areasAccion in entity.ListaAreasAccion)
                 {
                     areasAccion.IdOrganizacion = entity.Id;
@@ -60,7 +61,7 @@ namespace ServicioSocial.Business.Repositories
                 }
             }
 
-            return result;
+            return result>0;
         }
 
         public override async Task<Organizaciones> GetById(long id)
