@@ -66,12 +66,6 @@
           <button (click)="menuToggleFunc()" mat-icon-button class="lines-btn">
              <mat-icon>menu</mat-icon>
           </button>
-          <div class="search-bar" fxFlex [class.search-active]="searchFocus">
-             <form class="search-form">
-                <mat-icon>search</mat-icon>
-                <input type="text" placeholder="Search" (focus)="searchFocus = true" (focusout)="searchFocus = false " />
-             </form>
-          </div>
           <span fxFlex></span>
           <button (click)="end.toggle()" mat-icon-button class="ml-xs overflow-visible">
              <mat-icon>notifications</mat-icon>
@@ -82,23 +76,11 @@
           </button>
           <mat-menu #user="matMenu" class="opt-menu" x-position="before">
              <div mat-menu-item class="head-menu grad-blue">
-                Settings
+                Opciones
              </div>
              <button mat-menu-item>
-                <mat-icon>settings</mat-icon>
-                Setting 
-             </button>
-             <button mat-menu-item>
-                <mat-icon>account_box</mat-icon>
-                Profile
-             </button>
-             <button mat-menu-item>
-                <mat-icon>notifications_off</mat-icon>
-                Disable notifications
-             </button>
-             <button mat-menu-item>
                 <mat-icon>exit_to_app</mat-icon>
-                Sign Out
+                Cerrar sesión
              </button>
           </mat-menu>
            </div>

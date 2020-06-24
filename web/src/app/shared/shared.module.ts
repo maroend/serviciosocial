@@ -42,16 +42,27 @@ import {ObserversModule} from '@angular/cdk/observers';
 import {PortalModule} from '@angular/cdk/portal';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { MenuItems } from './menu-items/menu-items';
 import { HorizontalMenuItems } from './menu-items/horizontal-menu-items';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AccordionDirective } from './accordion/accordion.directive';
+import { AccordionAnchorDirective } from './accordion/accordionanchor.directive';
+import { AccordionLinkDirective } from './accordion/accordionlink.directive';
+import { HttpClientModule } from '@angular/common/http';
+import { Utils } from './functions/utils';
 
 
 
 @NgModule({
-  declarations: [AuthLayoutComponent, AdminLayoutComponent],
+  declarations: [
+    AuthLayoutComponent, 
+    AdminLayoutComponent,
+    AccordionAnchorDirective,
+    AccordionLinkDirective,
+    AccordionDirective],
   imports: [
     CommonModule,
     MatAutocompleteModule,
@@ -143,8 +154,14 @@ import { HorizontalMenuItems } from './menu-items/horizontal-menu-items';
     PortalModule,
     FlexLayoutModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    NgxDatatableModule,
+    ReactiveFormsModule,
+    AccordionAnchorDirective,
+    AccordionLinkDirective,
+    AccordionDirective,
+    HttpClientModule
   ],
-  providers: [ MenuItems, HorizontalMenuItems ]
+  providers: [ MenuItems, HorizontalMenuItems, Utils ]
 })
 export class SharedModule { }
