@@ -24,12 +24,21 @@ namespace ServicioSocial.Business.Generic
             _tableName = tableName;
         }
 
-        public virtual async Task<bool> Create(U entity)
+        public virtual async Task<long> CreateId(U entity)
         {
-            string query = $"INSERT INTO {_tableName} VALUES @entity";
+            string query = GenerateInsertQuery();
             using (var connection = new SqlConnection(_settings.Connection))
             {
-                var affectedRows = await connection.ExecuteAsync(query, new { entity = entity });
+                var affectedRows = await connection.QueryFirstOrDefaultAsync<long>(query, entity);
+                return  affectedRows;
+            }
+        }
+        public virtual async Task<bool> Create(U entity)
+        {
+            string query = GenerateInsertQuery();
+            using (var connection = new SqlConnection(_settings.Connection))
+            {
+                var affectedRows = await connection.ExecuteAsync(query, entity);
                 return affectedRows > 0;
             }
         }
@@ -66,7 +75,7 @@ namespace ServicioSocial.Business.Generic
 
         public virtual async Task<bool> Update(long id, U entity)
         {
-            string query = GenerateUpdateQuery(); ;
+            string query = GenerateUpdateQuery();
             using (var connection = new SqlConnection(_settings.Connection))
             {
                 var affectedRows = await connection.ExecuteAsync(query, entity);
@@ -102,5 +111,35 @@ namespace ServicioSocial.Business.Generic
 
             return updateQuery.ToString();
         }
+
+        private string GenerateInsertQuery()
+        {
+            var insertQuery = new StringBuilder($"INSERT INTO {_tableName} ");
+
+            insertQuery.Append("(");
+
+            var properties = GenerateListOfProperties(GetProperties);
+            properties.ForEach(prop => {
+                if (!prop.Equals("Id"))
+                    insertQuery.Append($"[{prop}],");
+            });
+
+            insertQuery
+                .Remove(insertQuery.Length - 1, 1)
+                .Append(") VALUES (");
+
+            properties.ForEach(prop => {
+                if (!prop.Equals("Id"))
+                    insertQuery.Append($"@{prop},");
+            });
+
+            insertQuery
+                .Remove(insertQuery.Length - 1, 1)
+                .Append(")");
+            insertQuery.Append(";SELECT CAST(SCOPE_IDENTITY() as BIGINT)");
+
+            return insertQuery.ToString();
+        }
+
     }
 }
