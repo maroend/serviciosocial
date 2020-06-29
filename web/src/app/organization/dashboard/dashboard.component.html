@@ -1,0 +1,14 @@
+<ngx-datatable
+  class="material"
+  [rows]="rows"
+  [columns]="[{name:'organizacion'},{name:'Descripcion'},{name:'Ciudad'},{name:'legionario'}]"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="'auto'"
+  [externalPaging]="true"
+  [count]="count"
+  [offset]="offset"
+  [limit]="limit"
+  (page)='onPage($event)'>
+</ngx-datatable>

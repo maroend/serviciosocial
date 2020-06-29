@@ -12,7 +12,21 @@ const routes: Routes = [{
   path: '',
   component: AdminLayoutComponent,
   children: [{
-    path: 'home',
+    path: 'organizations',
+    loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationModule)
+  }]
+}, {
+  path: '',
+  component: AdminLayoutComponent,
+  children: [{
+    path: 'student',
+    loadChildren: () => import('./student/student.module').then(m => m.StudentModule)
+  }]
+}, {
+  path: '',
+  component: AdminLayoutComponent,
+  children: [{
+    path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   }]
 }, {

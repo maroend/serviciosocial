@@ -45,3 +45,9 @@ Author: TrendSetter Themes
 @import "scss/material";
 @import "scss/utilities/utilities";
 
+.form-full .form-control{
+    width: 100%;
+}
+.error-p{
+    color: red;
+}
