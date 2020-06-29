@@ -31,13 +31,13 @@ export class OrganizationAddComponent implements OnInit {
     this.getAreas();
 
     this.form1 = this.fb.group({
-      nombre: new FormControl('', [Validators.required]),
+      organizacion: new FormControl('', [Validators.required]),
       responsable: new FormControl('', [Validators.required]),
-      pagina: new FormControl(''),
+      web: new FormControl(''),
       mision: new FormControl(''),
       descripcion: new FormControl(''),
-      objetivos: new FormControl(''),
-      legion: new FormControl('')
+      objetivo: new FormControl(''),
+      legionario: new FormControl('')
     });
 
     this.form2 = this.fb.group({
@@ -66,7 +66,7 @@ export class OrganizationAddComponent implements OnInit {
 
     this.form5 = this.fb.group({
       logros: new FormControl(''),
-      reconocimientos: new FormControl(''),
+      reconocimiento: new FormControl(''),
       junta: new FormControl('')
     });
 

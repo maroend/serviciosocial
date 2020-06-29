@@ -4,15 +4,15 @@
       <form class="form-full" [formGroup]="form1">
         <ng-template matStepLabel>DATOS GENERALES</ng-template>
             <mat-form-field class="form-control">
-              <input matInput formControlName="nombre" placeholder="NOMBRE" required />
-              <mat-error *ngIf="form1.get('nombre').hasError('required')">Campo requerido</mat-error>
+              <input matInput formControlName="organizacion" placeholder="NOMBRE" required />
+              <mat-error *ngIf="form1.get('organizacion').hasError('required')">Campo requerido</mat-error>
             </mat-form-field>
             <mat-form-field class="form-control">
               <input matInput formControlName="responsable" placeholder="RESPONSABLE" required />
               <mat-error *ngIf="form1.get('responsable').hasError('required')">Campo requerido</mat-error>
             </mat-form-field>
             <mat-form-field class="form-control">
-              <input matInput formControlName="pagina" placeholder="PÁGINA WEB" />
+              <input matInput formControlName="web" placeholder="PÁGINA WEB" />
             </mat-form-field>
             <mat-form-field class="form-control">
               <input matInput formControlName="mision" placeholder="MISIÓN" />
@@ -21,15 +21,15 @@
               <input matInput formControlName="descripcion" placeholder="DESCRIPCIÓN BREVE" />
             </mat-form-field>
             <mat-form-field class="form-control">
-              <input matInput formControlName="objetivos" placeholder="OBJETIVOS" />
+              <input matInput formControlName="objetivo" placeholder="OBJETIVOS" />
             </mat-form-field>
             <div class="form-control">
               <label id="example-radio-group-label">¿PERTENECE A LA LEGIÓN?</label>
-              <mat-radio-group formControlName="legion" aria-label="LEGIÓN?">
+              <mat-radio-group formControlName="legionario" aria-label="LEGIÓN?">
                 <mat-radio-button value="true">Sí</mat-radio-button>
                 <mat-radio-button value="false">No</mat-radio-button>
               </mat-radio-group>
-              <mat-error *ngIf="form1.get('legion').hasError('required')">Campo requerido</mat-error>
+              <mat-error *ngIf="form1.get('legionario').hasError('required')">Campo requerido</mat-error>
             </div>
         <div>
           <button  mat-flat-button color="primary" matStepperNext>SIGUIENTE</button>
@@ -124,7 +124,7 @@
           <textarea matInput formControlName="logros" placeholder="PRINCIPALES LOGROS DE LA INSTITUCIÓN" ></textarea>
         </mat-form-field>
         <mat-form-field class="form-control">
-          <textarea matInput formControlName="reconocimientos" placeholder="RECONOCIMIENTOS Y CERTIFICACIONES" ></textarea>
+          <textarea matInput formControlName="reconocimiento" placeholder="RECONOCIMIENTOS Y CERTIFICACIONES" ></textarea>
         </mat-form-field>
         <mat-form-field class="form-control">
           <textarea matInput formControlName="junta" placeholder="NOMBRE DE LOS INTEGRANTES DEL PATRONATO O JUNTA DIRECTIVA" ></textarea>

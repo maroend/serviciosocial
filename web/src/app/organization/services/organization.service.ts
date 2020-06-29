@@ -11,7 +11,16 @@ export class OrganizationService {
 
   constructor(private http: HttpClient, private utils: Utils) { }
 
+  getAll(){
+    return this.http.get(this.api);
+  }
+
   create(model){
+    const uri = `${this.api}`
+    return this.http.post(uri, model);
+  }
+
+  createWithDetails(model){
     const uri = `${this.api}/CreateWithDetails`
     return this.http.post(uri, model);
   }
