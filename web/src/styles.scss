@@ -5,3 +5,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .form-full .form-control{
     width: 100%;
 }
+
+.three-columns, .two-columns{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.three-columns > *{
+    width: 30%;
+}
+
+.two-columns > *{
+    width: 45%;
+}
+
+.mat-list{
+    border: 1px solid #CCC;
+    border-radius: 5px;
+}

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { SepomexService } from 'src/app/admin/services/sepomex.service';
 import { AreasService } from 'src/app/admin/services/areas.service';
 import { OrganizationService } from '../services/organization.service';
+import { RubrosService } from 'src/app/admin/services/rubros.service';
 
 @Component({
   selector: 'app-organization-add',
@@ -16,19 +17,28 @@ export class OrganizationAddComponent implements OnInit {
   form4: FormGroup;
   form5: FormGroup;
   form6: FormGroup;
-  form7: FormGroup;
+  formIntegrantes: FormGroup;
+  formContactos: FormGroup;
   colonias = []
   areas = []
+  rubros = []
+  listaIntegrantes = []
+  listaContactos = []
+  listaAreasAccion = []
+  listaRubros = []
+  displayedColumns: string[] = ['nombre', 'puesto', 'correo', 'borrar'];
 
   constructor(
     private fb: FormBuilder,
     private sepomexService: SepomexService,
     private areasService: AreasService,
+    private rubrosService: RubrosService,
     private service: OrganizationService
     ) { }
 
   ngOnInit(): void {
     this.getAreas();
+    this.getRubros();
 
     this.form1 = this.fb.group({
       organizacion: new FormControl('', [Validators.required]),
@@ -54,32 +64,26 @@ export class OrganizationAddComponent implements OnInit {
     });
 
     this.form4 = this.fb.group({
-      ninos: new FormControl(''),
-      ancianos: new FormControl(''),
-      mujeres: new FormControl(''),
-      discapacitados: new FormControl(''),
-      jovenes: new FormControl(''),
-      indigenas: new FormControl(''),
-      otro: new FormControl(''),
-      total: new FormControl('')
+      ninos: new FormControl(0),
+      ancianos: new FormControl(0),
+      mujeres: new FormControl(0),
+      discapacitados: new FormControl(0),
+      jovenes: new FormControl(0),
+      indigenas: new FormControl(0),
+      otro: new FormControl(0),
+      total: new FormControl(0)
     });
 
     this.form5 = this.fb.group({
       logros: new FormControl(''),
       reconocimiento: new FormControl(''),
-      junta: new FormControl('')
     });
 
     this.form6 = this.fb.group({
-      dependencia: new FormControl(''),
-      privada: new FormControl(''),
-      anahuac: new FormControl(''),
-      rse: new FormControl(''),
-      asociacion: new FormControl(''),
-      otro: new FormControl('')
+      rubroOtro: new FormControl('')
     });
 
-    this.form7 = this.fb.group({
+    this.formContactos = this.fb.group({
       nombre: new FormControl(''),
       prefijo: new FormControl(''),
       puesto: new FormControl(''),
@@ -88,6 +92,11 @@ export class OrganizationAddComponent implements OnInit {
       extension: new FormControl(''),
       celular: new FormControl('')
     });
+
+    this.formIntegrantes = this.fb.group({
+      nombre: new FormControl('')
+    });
+
   }
 
   searchCP(){
@@ -119,23 +128,84 @@ export class OrganizationAddComponent implements OnInit {
     })
   }
 
+  getRubros(){
+    this.rubrosService.getAll().subscribe((res: any[]) => {
+      if(res.length){
+        res.forEach(element => {
+          let control = new FormControl('');
+          this.form6.addControl("rubro"+element.id, control);
+        });
+        this.rubros = res;
+      }
+    })
+  }
+
   create(){
     var list = [1,2,3,4]
     let model = {
       ...this.form1.value,
       ...this.form2.value,
-      ...this.form3.value,
       ...this.form4.value,
       ...this.form5.value,
-      ...this.form6.value,
-      ...this.form7.value,
-      list: list
+      ...this.form6.value
     }
+    model.listaAreasAccion = this.listaAreasAccion;
+    model.listaRubros = this.listaRubros;
+    model.listaIntegrantes = this.listaIntegrantes;
+    model.listaContactos = this.listaContactos;
     this.service.create(model).subscribe((res: any)=>{
       console.log(res.message)
     }, error=>{
       alert(error.error)
     })
+  }
+
+  toggleArea(checked, id){
+    var area = this.areas.find(x=>x.id===id);
+    if(checked) this.listaAreasAccion.push(area);
+    else this.listaAreasAccion = this.listaAreasAccion.filter(item => item.id !== id);    
+  }
+
+  toggleRubro(checked, id){
+    var rubro = this.rubros.find(x=>x.id===id);
+    if(checked) this.listaRubros.push(rubro);
+    else this.listaRubros = this.listaRubros.filter(item => item.id !== id);    
+  }
+
+  calculatePeople(){
+      let sum = 0;
+      let formValue = this.form4.value;
+      sum = formValue.ninos + formValue.ancianos + 
+            formValue.mujeres + formValue.discapacitados + 
+            formValue.jovenes + formValue.indigenas + formValue.otro;
+      this.form4.get("total").setValue(sum);
+  }
+
+  addIntegrante(){
+    let value = this.formIntegrantes.value;
+    this.listaIntegrantes.push(value);
+    this.formIntegrantes.reset();
+  }
+
+  removeIntegrante(item){
+    const index: number = this.listaIntegrantes.indexOf(item);
+    if (index !== -1) {
+        this.listaIntegrantes.splice(index, 1);
+    } 
+  }
+
+  addContacto(){
+    let value = this.formContactos.value;
+    this.listaContactos.push(value);
+    this.listaContactos = [...this.listaContactos]
+    this.formContactos.reset();
+  }
+
+  removeContacto(item){
+    const index: number = this.listaContactos.indexOf(item);
+    if (index !== -1) {
+        this.listaContactos.splice(index, 1);
+    } 
   }
 
 }

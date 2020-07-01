@@ -20,7 +20,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   today: number = Date.now();
   url: string;
   showSettings = false;
-  dark: boolean = true;
+  dark: boolean = false;
   boxed: boolean;
   collapseSidebar: boolean;
   compactSidebar: boolean;

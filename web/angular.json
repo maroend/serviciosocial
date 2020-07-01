@@ -38,6 +38,7 @@
               "src/assets/fonts/pe/css/pe-icon-set-weather.css",
               "src/assets/fonts/data-table/icons.css",
               "src/assets/styles/app.scss",
+              "src/styles.scss",
               "src/assets/cropper/cropper.css",
               "src/assets/glyphicons/glyphicons.css",
               "node_modules/font-awesome/scss/font-awesome.scss",

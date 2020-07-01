@@ -1,8 +1,9 @@
 <h2>AGREGAR ORGANIZACIÓN</h2>
 <mat-vertical-stepper [linear]="true" #stepper>
     <mat-step [stepControl]="form1">
-      <form class="form-full" [formGroup]="form1">
+      <form [formGroup]="form1">
         <ng-template matStepLabel>DATOS GENERALES</ng-template>
+          <div class="two-columns">
             <mat-form-field class="form-control">
               <input matInput formControlName="organizacion" placeholder="NOMBRE" required />
               <mat-error *ngIf="form1.get('organizacion').hasError('required')">Campo requerido</mat-error>
@@ -31,14 +32,16 @@
               </mat-radio-group>
               <mat-error *ngIf="form1.get('legionario').hasError('required')">Campo requerido</mat-error>
             </div>
+          </div>
         <div>
           <button  mat-flat-button color="primary" matStepperNext>SIGUIENTE</button>
         </div>
       </form>
     </mat-step>
     <mat-step [stepControl]="form2">
-      <form class="form-full" [formGroup]="form2">
+      <form class="" [formGroup]="form2">
         <ng-template matStepLabel>DIRECCION</ng-template>
+          <div class="two-columns">
             <mat-form-field class="form-control">
               <input matInput formControlName="calle" placeholder="CALLE"  />
               <mat-error *ngIf="form2.get('calle').hasError('required')">Campo requerido</mat-error>
@@ -68,6 +71,7 @@
               <input matInput formControlName="pais" placeholder="PAÍS" />
               <mat-error *ngIf="form2.get('pais').hasError('required')">Campo requerido</mat-error>
             </mat-form-field>
+          </div>
         <div>
           <button  mat-flat-button color="warn" matStepperPrevious>REGRESAR</button>
           <button  mat-flat-button color="primary" matStepperNext>SIGUIENTE</button>
@@ -76,8 +80,8 @@
     </mat-step>
     <mat-step [stepControl]="form3">
       <ng-template matStepLabel>ÁREAS DE ACCIÓN</ng-template>
-      <form [formGroup]="form3" >
-        <mat-checkbox *ngFor="let area of areas" [formControlName]="'area'+area.id">{{area.areaAccion}}</mat-checkbox>
+      <form class="three-columns" [formGroup]="form3" >
+        <mat-checkbox (change)="toggleArea($event.checked, area.id)" *ngFor="let area of areas" [formControlName]="'area'+area.id">{{area.areaAccion}}</mat-checkbox>
       </form>
       <div>
         <button  mat-flat-button color="warn" matStepperPrevious>REGRESAR</button>
@@ -86,30 +90,32 @@
     </mat-step>
     <mat-step [stepControl]="form4">
       <ng-template matStepLabel>NÚMERO DE PERSONAS QUE ATIENDEN</ng-template>
-      <form class="form-full" [formGroup]="form4" >
+      <form class="" [formGroup]="form4" >
+        <div class="three-columns">
+          <mat-form-field class="form-control">
+            <input (change)="calculatePeople()" type="number" min="0" matInput formControlName="ninos" placeholder="NIÑOS" />
+          </mat-form-field>
+          <mat-form-field class="form-control">
+            <input (change)="calculatePeople()" type="number" min="0" matInput formControlName="ancianos" placeholder="ANCIANOS" />
+          </mat-form-field>
+          <mat-form-field class="form-control">
+            <input (change)="calculatePeople()" type="number" min="0" matInput formControlName="mujeres" placeholder="MUJERES" />
+          </mat-form-field>
+          <mat-form-field class="form-control">
+            <input (change)="calculatePeople()" type="number" min="0" matInput formControlName="discapacitados" placeholder="DISCAPACITADOS" />
+          </mat-form-field>
+          <mat-form-field class="form-control">
+            <input (change)="calculatePeople()" type="number" min="0" matInput formControlName="jovenes" placeholder="JÓVENES" />
+          </mat-form-field>
+          <mat-form-field class="form-control">
+            <input (change)="calculatePeople()" type="number" min="0" matInput formControlName="indigenas" placeholder="INDÍGENAS" />
+          </mat-form-field>
+          <mat-form-field class="form-control">
+            <input (change)="calculatePeople()" type="number" min="0" matInput formControlName="otro" placeholder="OTRO" />
+          </mat-form-field>
+        </div>
         <mat-form-field class="form-control">
-          <input matInput formControlName="ninos" placeholder="NIÑOS" />
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <input matInput formControlName="ancianos" placeholder="ANCIANOS" />
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <input matInput formControlName="mujeres" placeholder="MUJERES" />
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <input matInput formControlName="discapacitados" placeholder="DISCAPACITADOS" />
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <input matInput formControlName="jovenes" placeholder="JÓVENES" />
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <input matInput formControlName="indigenas" placeholder="INDÍGENAS" />
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <input matInput formControlName="otro" placeholder="OTRO" />
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <input matInput formControlName="total" placeholder="TOTAL" />
+          <input type="number" min="0" readonly matInput formControlName="total" placeholder="TOTAL" />
         </mat-form-field>
       </form>
       <div>
@@ -126,9 +132,21 @@
         <mat-form-field class="form-control">
           <textarea matInput formControlName="reconocimiento" placeholder="RECONOCIMIENTOS Y CERTIFICACIONES" ></textarea>
         </mat-form-field>
-        <mat-form-field class="form-control">
-          <textarea matInput formControlName="junta" placeholder="NOMBRE DE LOS INTEGRANTES DEL PATRONATO O JUNTA DIRECTIVA" ></textarea>
+      </form>
+      <form [formGroup]="formIntegrantes">
+        <mat-form-field style="width: 70%;" class="form-control">
+          <input matInput formControlName="nombre" placeholder="NOMBRE DE LOS INTEGRANTES DEL PATRONATO O JUNTA DIRECTIVA" >
         </mat-form-field>
+        <button mat-flat-button color="primary" (click)="addIntegrante()">Agregar</button>
+        <p>Lista de integrantes</p>
+        <mat-list>
+          <mat-list-item *ngFor="let integrante of listaIntegrantes">
+            <h3 mat-line> {{ integrante.nombre }} </h3>
+            <button mat-icon-button (click)="removeIntegrante(integrante)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
       </form>
       <div>
         <button  mat-flat-button color="warn" matStepperPrevious>REGRESAR</button>
@@ -138,13 +156,11 @@
     <mat-step [stepControl]="form6">
       <ng-template matStepLabel>RUBROS</ng-template>
       <form class="form-full" [formGroup]="form6" >
-        <mat-checkbox formControlName="dependencia">DEPENDENCIA GUBERNAMENTAL</mat-checkbox>
-        <mat-checkbox formControlName="privada">INSTITUCIÓN DE ASISTENCIA PÚBLICA O PRIVADA</mat-checkbox>
-        <mat-checkbox formControlName="anahuac">INSTITUCIONES DE LA UNIVERSIDAD ANÁHUAC</mat-checkbox>
-        <mat-checkbox formControlName="rse">EMPRESAS CON PROYECTOS DE LA RSE</mat-checkbox>
-        <mat-checkbox formControlName="asociacion">ASOCIACION CIVIL CON RSE</mat-checkbox>
+        <div class="two-columns">
+          <mat-checkbox (change)="toggleRubro($event.checked, rubro.id)" *ngFor="let rubro of rubros" [formControlName]="'rubro'+rubro.id">{{rubro.rubro}}</mat-checkbox>
+        </div>
         <mat-form-field class="form-control">
-          <textarea matInput formControlName="otro" placeholder="OTRO" ></textarea>
+          <textarea matInput formControlName="rubroOtro" placeholder="OTRO" ></textarea>
         </mat-form-field>
       </form>
       <div>
@@ -152,31 +168,58 @@
         <button  mat-flat-button color="primary" matStepperNext>SIGUIENTE</button>
       </div>
     </mat-step>
-    <mat-step [stepControl]="form7">
+    <mat-step [stepControl]="formContactos">
       <ng-template matStepLabel>CONTACTO</ng-template>
-      <form class="form-full" [formGroup]="form7" >
-        <mat-form-field class="form-control">
-          <textarea matInput formControlName="nombre" placeholder="NOMBRE COMPLETO" ></textarea>
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <textarea matInput formControlName="prefijo" placeholder="PREFIJO/NIVEL" ></textarea>
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <textarea matInput formControlName="puesto" placeholder="PUESTO" ></textarea>
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <textarea matInput formControlName="correo" placeholder="CORREO" ></textarea>
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <textarea matInput formControlName="telefono" placeholder="TELÉFONO" ></textarea>
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <textarea matInput formControlName="extension" placeholder="EXT." ></textarea>
-        </mat-form-field>
-        <mat-form-field class="form-control">
-          <textarea matInput formControlName="celular" placeholder="CELULAR" ></textarea>
-        </mat-form-field>
+      <form class="" [formGroup]="formContactos" >
+        <div class="two-columns">
+          <mat-form-field class="form-control">
+            <input matInput formControlName="nombre" placeholder="NOMBRE COMPLETO" >
+          </mat-form-field>
+          <mat-form-field class="form-control">
+            <input matInput formControlName="prefijo" placeholder="PREFIJO/NIVEL" >
+          </mat-form-field>
+          <mat-form-field class="form-control">
+            <input matInput formControlName="puesto" placeholder="PUESTO" >
+          </mat-form-field>
+          <mat-form-field class="form-control">
+            <input matInput formControlName="correo" placeholder="CORREO" >
+          </mat-form-field>
+          <mat-form-field class="form-control">
+            <input matInput formControlName="telefono" placeholder="TELÉFONO" >
+          </mat-form-field>
+          <mat-form-field class="form-control">
+            <input matInput formControlName="extension" placeholder="EXT." >
+          </mat-form-field>
+          <mat-form-field class="form-control">
+            <input matInput formControlName="celular" placeholder="CELULAR" >
+          </mat-form-field>
+          <button mat-flat-button color="primary" (click)="addContacto()">Agregar</button>
+        </div>
       </form>
+      <table style="width: 100%;" mat-table *ngIf="listaContactos.length" [dataSource]="listaContactos">
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element">{{element.prefijo}} {{element.nombre}} </td>
+        </ng-container>
+        <ng-container matColumnDef="puesto">
+          <th mat-header-cell *matHeaderCellDef> Puesto </th>
+          <td mat-cell *matCellDef="let element"> {{element.puesto}} </td>
+        </ng-container>
+        <ng-container matColumnDef="correo">
+          <th mat-header-cell *matHeaderCellDef> Correo </th>
+          <td mat-cell *matCellDef="let element"> {{element.correo}} </td>
+        </ng-container>
+        <ng-container matColumnDef="borrar">
+          <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="removeContacto(element)" aria-label="Borrar">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
       <div>
         <button  mat-flat-button color="warn" matStepperPrevious>REGRESAR</button>
         <button  mat-flat-button color="primary" (click)="create()">GUARDAR</button>
