@@ -1,1 +1,52 @@
-<p>organization-documents works!</p>
+<h2>Documentos entregados</h2>
+<div>
+    <form [formGroup]="form" >
+        <div class="form-control">
+          <label id="example-radio-group-label">CARTA DE PRESENTACIÓN</label>
+          <mat-radio-group class="custom-radio-group" formControlName="presentacion" aria-label="CARTA PRESENTACION">
+            <mat-radio-button class="custom-radio-button" value="si">ENTREGADO</mat-radio-button>
+            <mat-radio-button class="custom-radio-button" value="no">NO ENTREGADO</mat-radio-button>
+            <mat-radio-button class="custom-radio-button" value="n/a">NO APLICA</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="form-control">
+          <label id="example-radio-group-label">CARTA DE ACREDITACIÓN</label>
+          <mat-radio-group class="custom-radio-group" formControlName="acreditacion" aria-label="CARTA PRESENTACION">
+            <mat-radio-button class="custom-radio-button" value="si">ENTREGADO</mat-radio-button>
+            <mat-radio-button class="custom-radio-button" value="no">NO ENTREGADO</mat-radio-button>
+            <mat-radio-button class="custom-radio-button" value="n/a">NO APLICA</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="form-control">
+          <label id="example-radio-group-label">CARTA DE RECOMENDACIÓN</label>
+          <mat-radio-group class="custom-radio-group" formControlName="recomendacion" aria-label="CARTA PRESENTACION">
+            <mat-radio-button class="custom-radio-button" value="si">ENTREGADO</mat-radio-button>
+            <mat-radio-button class="custom-radio-button" value="no">NO ENTREGADO</mat-radio-button>
+            <mat-radio-button class="custom-radio-button" value="n/a">NO APLICA</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="form-control">
+          <label id="example-radio-group-label">REGLAMENTO</label>
+          <mat-radio-group class="custom-radio-group" formControlName="reglamento" aria-label="CARTA PRESENTACION">
+            <mat-radio-button class="custom-radio-button" value="si">SI</mat-radio-button>
+            <mat-radio-button class="custom-radio-button" value="no">NO</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="form-control">
+          <label id="example-radio-group-label">ACTA CONSTITUTIVA</label>
+          <mat-radio-group class="custom-radio-group" formControlName="acta" aria-label="CARTA PRESENTACION">
+            <mat-radio-button class="custom-radio-button" value="si">SI</mat-radio-button>
+            <mat-radio-button class="custom-radio-button" value="no">NO</mat-radio-button>
+            <mat-radio-button class="custom-radio-button" value="n/a">NO APLICA</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="form-control">
+          <label id="example-radio-group-label">FOLLETERIA</label>
+          <mat-radio-group class="custom-radio-group" formControlName="folleteria" aria-label="CARTA PRESENTACION">
+            <mat-radio-button class="custom-radio-button" value="si">SI</mat-radio-button>
+            <mat-radio-button class="custom-radio-button" value="no">NO</mat-radio-button>
+            <mat-radio-button class="custom-radio-button" value="n/a">NO APLICA</mat-radio-button>
+          </mat-radio-group>
+        </div>
+    </form>
+</div>

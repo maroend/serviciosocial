@@ -1,7 +1,7 @@
 <ngx-datatable
   class="material"
   [rows]="rows"
-  [columns]="[{name:'organizacion'},{name:'Descripcion'},{name:'Ciudad'},{name:'legionario'}]"
+  [columns]="[{name:'organizacion'},{name:'Descripcion'},{name:'Ciudad'},{name:'legionario'},{name: 'Actions', cellTemplate: this.roleTemplate}]"
   [columnMode]="'force'"
   [headerHeight]="50"
   [footerHeight]="50"
@@ -12,3 +12,8 @@
   [limit]="limit"
   (page)='onPage($event)'>
 </ngx-datatable>
+<ng-template #roleTemplate let-row="row" let-value="value" let-i="index">
+    <button (click)="documents(row)" mat-icon-button>
+        <mat-icon>folder</mat-icon>
+    </button>
+</ng-template>

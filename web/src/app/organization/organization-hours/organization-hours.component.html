@@ -1,1 +1,42 @@
-<p>organization-hours works!</p>
+<h2>AVANCE DE HORAS DEL ALUMNO</h2>
+
+<div>
+    <mat-select [(ngModel)]="alumno" placeholder="ALUMNO" required>
+        <mat-option *ngFor="let alumno of alumnos" [value]="alumno.id">{{alumno.nombre}}</mat-option>
+    </mat-select>
+</div>
+<form [formGroup]="form">
+    <ng-template matStepLabel>DATOS GENERALES</ng-template>
+        <div class="flex-row">
+            <mat-form-field class="form-control">
+                <input type="number" matInput formControlName="horas" placeholder="HORAS AVANZADAS" required />
+                <mat-error *ngIf="form.get('horas').hasError('required')">Campo requerido</mat-error>
+            </mat-form-field>        
+            <button  mat-flat-button color="primary">GUARDAR</button>
+        </div>
+        <mat-form-field class="full-width">
+            <input matInput formControlName="observaciones" placeholder="OBSERVACIONES" required />
+            <mat-error *ngIf="form.get('observaciones').hasError('required')">Campo requerido</mat-error>
+        </mat-form-field>
+
+        <table style="width: 100%;" mat-table [dataSource]="horasAlumno">
+            <ng-container matColumnDef="no">
+                <th mat-header-cell *matHeaderCellDef> No </th>
+                <td mat-cell *matCellDef="let element">{{element.no}} </td>
+            </ng-container>
+            <ng-container matColumnDef="horas">
+                <th mat-header-cell *matHeaderCellDef> Horas avanzadas </th>
+                <td mat-cell *matCellDef="let element"> {{element.horas}} </td>
+            </ng-container>
+            <ng-container matColumnDef="observaciones">
+                <th mat-header-cell *matHeaderCellDef> Observaciones </th>
+                <td mat-cell *matCellDef="let element"> {{element.observaciones}} </td>
+            </ng-container>
+            <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+</form>

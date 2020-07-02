@@ -23,3 +23,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border: 1px solid #CCC;
     border-radius: 5px;
 }
+
+.custom-radio-group {
+    display: flex;
+    flex-direction: row;
+    margin: 15px 0;
+}
+
+.custom-radio-button {
+    margin: 5px;
+}
+.flex-row{
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: start;
+}
+.flex-row > *:first-child{
+    flex: 1; 
+}
+.full-width{
+    width: 100%;
+}

@@ -47,5 +47,9 @@ export class DashboardComponent implements OnInit {
     console.log('Page Event', event);
     this.page(event.offset, event.limit);
   }
+  documents(item){
+    console.log(item);
+    
+  }
 
 }
