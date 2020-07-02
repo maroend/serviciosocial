@@ -1,1 +1,72 @@
-<p>organization-evaluation works!</p>
+<h2>EVALUACIÓN DEL ALUMNO</h2>
+
+<div>
+    <mat-select [(ngModel)]="periodo" placeholder="PERIODO" required>
+        <mat-option *ngFor="let periodo of periodos" [value]="periodo.id">{{periodo.nombre}}</mat-option>
+    </mat-select>
+    <mat-select [(ngModel)]="proyecto" placeholder="PROYECTO" required>
+        <mat-option *ngFor="let proyecto of proyectos" [value]="proyecto.id">{{proyecto.nombre}}</mat-option>
+    </mat-select>
+    <mat-select [(ngModel)]="alumno" placeholder="ALUMNO" required>
+        <mat-option *ngFor="let alumno of alumnos" [value]="alumno.id">{{alumno.nombre}}</mat-option>
+    </mat-select>
+</div>
+<p>Agradecemos su opinión objetiva y honesta sobre el desempeño de los alumnos de servicio social. Por favor seleccione y marque de acuerdo a lo que se acerque más a su opinión.</p>
+<table style="width: 100%;" mat-table [dataSource]="preguntas">
+    <ng-container matColumnDef="pregunta">
+        <th style="width: 50%;" mat-header-cell *matHeaderCellDef>  </th>
+        <td mat-cell *matCellDef="let element">{{element.pregunta}} </td>
+    </ng-container>
+    <ng-container matColumnDef="p1">
+        <th mat-header-cell *matHeaderCellDef> Siempre </th>
+        <td mat-cell *matCellDef="let element">
+            <mat-radio-group [(ngModel)]="respuestas[element.nombre]">
+                <mat-radio-button [value]="5"></mat-radio-button>
+            </mat-radio-group>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="p2">
+        <th mat-header-cell *matHeaderCellDef> Casi siempre </th>
+        <td mat-cell *matCellDef="let element">
+            <mat-radio-group [(ngModel)]="respuestas[element.nombre]">
+                <mat-radio-button [value]="4"></mat-radio-button>
+            </mat-radio-group>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="p3">
+        <th mat-header-cell *matHeaderCellDef> Pocas veces </th>
+        <td mat-cell *matCellDef="let element">
+            <mat-radio-group [(ngModel)]="respuestas[element.nombre]">
+                <mat-radio-button [value]="3"></mat-radio-button>
+            </mat-radio-group>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="p4">
+        <th mat-header-cell *matHeaderCellDef> Casi nunca </th>
+        <td mat-cell *matCellDef="let element">
+            <mat-radio-group [(ngModel)]="respuestas[element.nombre]">
+                <mat-radio-button [value]="2"></mat-radio-button>
+            </mat-radio-group>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="p5">
+        <th mat-header-cell *matHeaderCellDef> Nunca </th>
+        <td mat-cell *matCellDef="let element">
+            <mat-radio-group [(ngModel)]="respuestas[element.nombre]">
+                <mat-radio-button [value]="1"></mat-radio-button>
+            </mat-radio-group>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="p6">
+        <th mat-header-cell *matHeaderCellDef> No aplica </th>
+        <td mat-cell *matCellDef="let element">
+            <mat-radio-group [(ngModel)]="respuestas[element.nombre]">
+                <mat-radio-button [value]="0"></mat-radio-button>
+            </mat-radio-group>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<button  mat-flat-button color="primary" (click)="create()">GUARDAR</button>

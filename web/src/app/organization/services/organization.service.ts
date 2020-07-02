@@ -55,6 +55,11 @@ export class OrganizationService {
     return this.http.get(uri);
   }
 
+  getQuestions(){
+    const uri = `${this.api}/Preguntas`;
+    return this.http.get(uri);
+  }
+
   create(model){
     const uri = `${this.api}`
     return this.http.post(uri, model);
