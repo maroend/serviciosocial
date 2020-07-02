@@ -9,12 +9,14 @@ import { OrganizationService } from '../services/organization.service';
 })
 export class OrganizationEvaluationComponent implements OnInit {
 
-  alumno = undefined;
   periodos = [];
   proyectos = [];
   alumnos = [];
   preguntas = [];
   respuestas = []
+  periodo = 0
+  proyecto = 0
+  alumno = 0
   displayedColumns: string[] = ['pregunta', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6'];
 
   constructor(
@@ -74,6 +76,10 @@ export class OrganizationEvaluationComponent implements OnInit {
     this.service.getQuestions().subscribe((res: any[])=>{
       this.preguntas = res;
     })
+  }
+  save(){
+    console.log(this.respuestas);
+    
   }
 
 }
