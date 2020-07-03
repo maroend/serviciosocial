@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrganizationService } from '../services/organization.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,12 +8,15 @@ import { OrganizationService } from '../services/organization.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  organizations =[]
   rows = [];
   count = 0;
   offset = 0;
   limit = 10;
 
-  constructor(private service: OrganizationService){
+  constructor(
+    private service: OrganizationService,
+    private router: Router){
 
   }
 
@@ -26,14 +30,14 @@ export class DashboardComponent implements OnInit {
 
       const start = offset * limit;
       const end = start + limit;
-      const rows = [...this.rows];
+      const organizations = [...this.organizations];
+      this.rows = results
 
       for (let i = start; i < end; i++) {
-        rows[i] = results[i];
+        organizations[i] = results[i];
       }
 
-      this.rows = rows;
-      console.log('Page Results', start, end, rows);
+      this.organizations = organizations;
     });
   }
 
@@ -50,6 +54,19 @@ export class DashboardComponent implements OnInit {
   documents(item){
     console.log(item);
     
+  }
+  updateFilter(event) {
+    const val = event.target.value;
+    // filter our data
+    const temp = this.organizations.filter(function(d) {
+      if(!d) return false;
+      return d.organizacion.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    // update the rows
+    this.rows = temp;
+  }
+  onCreate(){
+    this.router.navigate(['organizations', 'add']);
   }
 
 }

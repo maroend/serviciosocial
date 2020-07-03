@@ -4,6 +4,7 @@ import { SepomexService } from 'src/app/admin/services/sepomex.service';
 import { AreasService } from 'src/app/admin/services/areas.service';
 import { OrganizationService } from '../services/organization.service';
 import { RubrosService } from 'src/app/admin/services/rubros.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-organization-add',
@@ -17,6 +18,7 @@ export class OrganizationAddComponent implements OnInit {
   form4: FormGroup;
   form5: FormGroup;
   form6: FormGroup;
+  form7: FormGroup;
   formIntegrantes: FormGroup;
   formContactos: FormGroup;
   colonias = []
@@ -27,12 +29,14 @@ export class OrganizationAddComponent implements OnInit {
   listaAreasAccion = []
   listaRubros = []
   displayedColumns: string[] = ['nombre', 'puesto', 'correo', 'borrar'];
+  generos = ['Hombre', 'Mujer', 'Otro']
 
   constructor(
     private fb: FormBuilder,
     private sepomexService: SepomexService,
     private areasService: AreasService,
     private rubrosService: RubrosService,
+    private router: Router,
     private service: OrganizationService
     ) { }
 
@@ -42,12 +46,24 @@ export class OrganizationAddComponent implements OnInit {
 
     this.form1 = this.fb.group({
       organizacion: new FormControl('', [Validators.required]),
-      responsable: new FormControl('', [Validators.required]),
       web: new FormControl(''),
       mision: new FormControl(''),
       descripcion: new FormControl(''),
       objetivo: new FormControl(''),
-      legionario: new FormControl('')
+      legionario: new FormControl(false)
+    });
+
+    this.form7 = this.fb.group({
+      nombre: new FormControl('', [Validators.required]),
+      apellidos: new FormControl('', [Validators.required]),
+      genero: new FormControl(''),
+      puesto: new FormControl(''),
+      departamento: new FormControl(''),
+      disponible: new FormControl(true),
+      usuario: new FormControl('', [Validators.required]),
+      contrasena: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      telefono: new FormControl(''),
+      correo: new FormControl('', [Validators.required])
     });
 
     this.form2 = this.fb.group({
@@ -61,6 +77,7 @@ export class OrganizationAddComponent implements OnInit {
     });
 
     this.form3 = this.fb.group({
+      areasDeAccionOtro: new FormControl('')
     });
 
     this.form4 = this.fb.group({
@@ -146,15 +163,16 @@ export class OrganizationAddComponent implements OnInit {
       ...this.form1.value,
       ...this.form2.value,
       ...this.form4.value,
-      ...this.form5.value,
-      ...this.form6.value
+      ...this.form5.value
     }
-    model.listaAreasAccion = this.listaAreasAccion;
-    model.listaRubros = this.listaRubros;
-    model.listaIntegrantes = this.listaIntegrantes;
+    model.listaAreasAccion = this.listaAreasAccion.map(x=> {return {idAreaAccion: x.id}});
+    model.listaRubros = this.listaRubros.map(x=> {return {idRubro: x.id}});
     model.listaContactos = this.listaContactos;
+    model.rubroOtro = this.form6.value.rubroOtro;
+    model.areasDeAccionOtro = this.form3.value.areasDeAccionOtro;
+    model.responsable = this.form7.value;
     this.service.create(model).subscribe((res: any)=>{
-      console.log(res.message)
+      this.router.navigate(['organizations','home']);
     }, error=>{
       alert(error.error)
     })

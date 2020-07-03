@@ -1,7 +1,13 @@
+<div>
+  <mat-form-field style="width: 100%" class="mb-1">
+    <input matInput placeholder="Buscar..." required (keyup)='updateFilter($event)'>
+  </mat-form-field>
+  <button (click)="onCreate()" mat-flat-button color="primary">Agregar</button>
+</div>
 <ngx-datatable
   class="material"
   [rows]="rows"
-  [columns]="[{name:'organizacion'},{name:'Descripcion'},{name:'Ciudad'},{name:'legionario'},{name: 'Actions', cellTemplate: this.roleTemplate}]"
+  [columns]="[{name:'Id'},{name:'Organizacion'},{name:'Estado'},{name: 'Acciones', cellTemplate: this.roleTemplate}]"
   [columnMode]="'force'"
   [headerHeight]="50"
   [footerHeight]="50"
@@ -13,7 +19,15 @@
   (page)='onPage($event)'>
 </ngx-datatable>
 <ng-template #roleTemplate let-row="row" let-value="value" let-i="index">
-    <button (click)="documents(row)" mat-icon-button>
-        <mat-icon>folder</mat-icon>
+  <ng-container>
+    <button mat-flat-button color="accent" [matMenuTriggerFor]="menu">
+      Acciones
+      <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Proyectos</button>
+      <button mat-menu-item>Editar</button>
+      <button mat-menu-item>Borrar</button>
+    </mat-menu>
+  </ng-container>
 </ng-template>

@@ -9,10 +9,6 @@
               <mat-error *ngIf="form1.get('organizacion').hasError('required')">Campo requerido</mat-error>
             </mat-form-field>
             <mat-form-field class="form-control">
-              <input matInput formControlName="responsable" placeholder="RESPONSABLE" required />
-              <mat-error *ngIf="form1.get('responsable').hasError('required')">Campo requerido</mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-control">
               <input matInput formControlName="web" placeholder="PÁGINA WEB" />
             </mat-form-field>
             <mat-form-field class="form-control">
@@ -27,10 +23,61 @@
             <div class="form-control">
               <label id="example-radio-group-label">¿PERTENECE A LA LEGIÓN?</label>
               <mat-radio-group formControlName="legionario" aria-label="LEGIÓN?">
-                <mat-radio-button value="true">Sí</mat-radio-button>
-                <mat-radio-button value="false">No</mat-radio-button>
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
               </mat-radio-group>
               <mat-error *ngIf="form1.get('legionario').hasError('required')">Campo requerido</mat-error>
+            </div>
+          </div>
+        <div>
+          <button  mat-flat-button color="primary" matStepperNext>SIGUIENTE</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="form7">
+      <form [formGroup]="form7">
+        <ng-template matStepLabel>DATOS GENERALES</ng-template>
+          <div class="two-columns">
+            <mat-form-field class="form-control">
+              <input matInput formControlName="nombre" placeholder="NOMBRE" required />
+              <mat-error *ngIf="form7.get('nombre').hasError('required')">Campo requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+              <input matInput formControlName="apellidos" placeholder="APELLIDOS" required />
+              <mat-error *ngIf="form7.get('apellidos').hasError('required')">Campo requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+              <input matInput formControlName="usuario" placeholder="USUARIO" required />
+              <mat-error *ngIf="form7.get('usuario').hasError('required')">Campo requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+              <input matInput type="password" formControlName="contrasena" placeholder="CONTRASEÑA" required />
+              <mat-error *ngIf="form7.get('contrasena').hasError('required')">Campo requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+              <mat-select formControlName="genero" placeholder="GÉNERO" required>
+                <mat-option *ngFor="let genero of generos" [value]="genero">{{genero}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+              <input matInput formControlName="puesto" placeholder="PUESTO" />
+            </mat-form-field>
+            <mat-form-field class="form-control">
+              <input matInput formControlName="departamento" placeholder="DEPARTAMENTO" />
+            </mat-form-field>
+            <mat-form-field class="form-control">
+              <input matInput formControlName="telefono" placeholder="TELÉFONO" />
+            </mat-form-field>
+            <mat-form-field class="form-control">
+              <input matInput formControlName="correo" placeholder="CORREO" />
+            </mat-form-field>
+            <div class="form-control">
+              <label id="example-radio-group-label">DISPONIBLE</label>
+              <mat-radio-group formControlName="disponible" aria-label="LEGIÓN?">
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+              <mat-error *ngIf="form7.get('disponible').hasError('required')">Campo requerido</mat-error>
             </div>
           </div>
         <div>
@@ -80,8 +127,13 @@
     </mat-step>
     <mat-step [stepControl]="form3">
       <ng-template matStepLabel>ÁREAS DE ACCIÓN</ng-template>
-      <form class="three-columns" [formGroup]="form3" >
-        <mat-checkbox (change)="toggleArea($event.checked, area.id)" *ngFor="let area of areas" [formControlName]="'area'+area.id">{{area.areaAccion}}</mat-checkbox>
+      <form [formGroup]="form3" >
+        <div class="three-columns">
+          <mat-checkbox (change)="toggleArea($event.checked, area.id)" *ngFor="let area of areas" [formControlName]="'area'+area.id">{{area.areaAccion}}</mat-checkbox>
+        </div>
+        <mat-form-field class="form-control">
+          <textarea matInput formControlName="areasDeAccionOtro" placeholder="OTRO" ></textarea>
+        </mat-form-field>
       </form>
       <div>
         <button  mat-flat-button color="warn" matStepperPrevious>REGRESAR</button>
@@ -133,7 +185,7 @@
           <textarea matInput formControlName="reconocimiento" placeholder="RECONOCIMIENTOS Y CERTIFICACIONES" ></textarea>
         </mat-form-field>
       </form>
-      <form [formGroup]="formIntegrantes">
+      <form *ngIf="false" [formGroup]="formIntegrantes">
         <mat-form-field style="width: 70%;" class="form-control">
           <input matInput formControlName="nombre" placeholder="NOMBRE DE LOS INTEGRANTES DEL PATRONATO O JUNTA DIRECTIVA" >
         </mat-form-field>
