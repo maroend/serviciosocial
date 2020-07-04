@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if(this.authService.existToken()) this.router.navigate(['administration', 'workloads'])
     this.loginForm = this.formBuilder.group({
       user: ['', [Validators.required]],
       password: ['', [Validators.required]],
@@ -30,9 +31,14 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe(
-        res => {
-          if (res)
+        (res: any) => {
+          if (res.resultado){
+            this.authService.storeToken(res.token);
             this.router.navigate(['/organizations']);
+          }
+          else{
+            alert(res.mensaje);
+          }
         },
         error => {
           error = "Datos incorrectos"

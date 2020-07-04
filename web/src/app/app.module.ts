@@ -8,7 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { JwtModule } from "@auth0/angular-jwt";
 
 export function tokenGetter() {
-  return localStorage.getItem("access_token");
+  return sessionStorage.getItem("ss_token");
 }
 
 @NgModule({

@@ -22,28 +22,30 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.page(this.offset, this.limit);
+    this.getOrganizations();
   }
 
   page(offset, limit) {
-    this.getOrganizations((results) => {
-      this.count = results.length;
+      this.count = this.organizations.length;
 
       const start = offset * limit;
       const end = start + limit;
-      const organizations = [...this.organizations];
-      this.rows = results
+      const organizations = [];
 
       for (let i = start; i < end; i++) {
-        organizations[i] = results[i];
+        organizations.push(this.organizations[i]);
       }
-
-      this.organizations = organizations;
-    });
+      console.log(organizations);
+      
+      this.rows = organizations;
+      
   }
 
-  getOrganizations(cb) {
+  getOrganizations() {
     this.service.getAll().subscribe((res: any[])=>{
-      cb(res);
+      this.organizations = res;
+      this.rows = res;
+      this.page(0,10);
     })
   }
 
