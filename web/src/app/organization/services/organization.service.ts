@@ -20,8 +20,8 @@ export class OrganizationService {
     return this.http.get(uri);
   }
 
-  getContacts(){
-    const uri = `${this.api}/Contactos`;
+  getById(id){
+    const uri = `${this.api}/${id}`;
     return this.http.get(uri);
   }
 

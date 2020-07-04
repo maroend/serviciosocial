@@ -9,10 +9,11 @@ import { OrganizationDocumentsComponent } from './organization-documents/organiz
 import { OrganizationProjectsComponent } from './organization-projects/organization-projects.component';
 import { OrganizationHoursComponent } from './organization-hours/organization-hours.component';
 import { OrganizationEvaluationComponent } from './organization-evaluation/organization-evaluation.component';
+import { OrganizationProjectAddComponent } from './organization-project-add/organization-project-add.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent, OrganizationAddComponent, OrganizationDocumentsComponent, OrganizationProjectsComponent, OrganizationHoursComponent, OrganizationEvaluationComponent],
+  declarations: [DashboardComponent, OrganizationAddComponent, OrganizationDocumentsComponent, OrganizationProjectsComponent, OrganizationHoursComponent, OrganizationEvaluationComponent, OrganizationProjectAddComponent],
   imports: [
     CommonModule,
     OrganizationRoutingModule,

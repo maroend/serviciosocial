@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { OrganizationService } from '../services/organization.service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ProjectService } from '../services/project.service';
 
 @Component({
   selector: 'app-organization-projects',
@@ -8,71 +10,65 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
   styleUrls: ['./organization-projects.component.scss']
 })
 export class OrganizationProjectsComponent implements OnInit {
-  form: FormGroup;
-  proyectos = []
-  contactos = []
-  periodos = []
-  recursos = []
-  horas = []
+  organizationId = 0;
+  projects =[];
+  rows = [];
+  count = 0;
+  offset = 0;
+  limit = 10;
 
   constructor(
-    private fb: FormBuilder,
-    private service: OrganizationService
-    ) { }
+    private service: ProjectService,
+    private route: ActivatedRoute,
+    private router: Router){
+      this.route.queryParams.subscribe(params => {
+        this.organizationId = params['id'];
+      });
+  }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.page(this.offset, this.limit);
+    this.getProjects();
+  }
 
-    this.form = this.fb.group({
-      proyecto: new FormControl(''),
-      objetivo: new FormControl(''),
-      contacto: new FormControl(''),
-      periodo: new FormControl(''),
-      recursos: new FormControl(''),
-      horas: new FormControl(''),
-      horario: new FormControl(''),
-      beneficios: new FormControl(''),
-      horas_proyecto: new FormControl(''),
-      descripcion_formacion: new FormControl(''),
-      constancia: new FormControl(''),
-      beneficios_alumno: new FormControl(''),
-      descripcion_impacto: new FormControl(''),
-      indicadores: new FormControl('')
+  page(offset, limit) {
+      this.count = this.projects.length;
+
+      const start = offset * limit;
+      const end = start + limit;
+      const organizations = [];
+
+      for (let i = start; i < end; i++) {
+        organizations.push(this.projects[i]);
+      }
+      this.rows = organizations;
+      
+  }
+
+  getProjects() {
+    var model = {idOrganizacion: this.organizationId}
+    this.service.getProjects(model).subscribe((res: any[])=>{
+      this.projects = res;
+      this.rows = res;
+      this.page(0,10);
+    })
+  }
+
+  onPage(event) {
+    this.page(event.offset, event.limit);
+  }
+  updateFilter(event) {
+    const val = event.target.value;
+    // filter our data
+    const temp = this.projects.filter(function(d) {
+      if(!d) return false;
+      return d.organizacion.toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.getProyectos();
-    this.getContactos();
-    this.getPeriodos();
-    this.getRecursos();
-    this.getHoras();
+    // update the rows
+    this.rows = temp;
   }
-
-  getProyectos(){
-    this.service.getProjects().subscribe((res: any[])=>{
-      this.proyectos = res;
-    })
-  }
-
-  getContactos(){
-    this.service.getContacts().subscribe((res: any[])=>{
-      this.contactos = res;
-    })
-  }
-
-  getPeriodos(){
-    this.service.getTerms().subscribe((res: any[])=>{
-      this.periodos = res;
-    })
-  }
-
-  getRecursos(){
-    this.service.getResources().subscribe((res: any[])=>{
-      this.recursos = res;
-    })
-  }
-
-  getHoras(){
-    this.service.getHours().subscribe((res: any[])=>{
-      this.horas = res;
-    })
+  onCreate(){
+    this.router.navigate(['organizations','project'],{ queryParams:{id: this.organizationId}});
   }
 
 }

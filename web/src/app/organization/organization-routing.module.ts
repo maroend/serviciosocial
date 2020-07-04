@@ -6,6 +6,7 @@ import { OrganizationDocumentsComponent } from './organization-documents/organiz
 import { OrganizationEvaluationComponent } from './organization-evaluation/organization-evaluation.component';
 import { OrganizationHoursComponent } from './organization-hours/organization-hours.component';
 import { OrganizationProjectsComponent } from './organization-projects/organization-projects.component';
+import { OrganizationProjectAddComponent } from './organization-project-add/organization-project-add.component';
 
 
 const routes: Routes = [{
@@ -33,6 +34,9 @@ const routes: Routes = [{
     },{
       path: 'projects',
       component: OrganizationProjectsComponent
+    },{
+      path: 'project',
+      component: OrganizationProjectAddComponent
     }
   ]
 }];

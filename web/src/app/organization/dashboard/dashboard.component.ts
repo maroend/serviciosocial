@@ -35,8 +35,6 @@ export class DashboardComponent implements OnInit {
       for (let i = start; i < end; i++) {
         organizations.push(this.organizations[i]);
       }
-      console.log(organizations);
-      
       this.rows = organizations;
       
   }
@@ -50,7 +48,6 @@ export class DashboardComponent implements OnInit {
   }
 
   onPage(event) {
-    console.log('Page Event', event);
     this.page(event.offset, event.limit);
   }
   documents(item){
@@ -69,6 +66,9 @@ export class DashboardComponent implements OnInit {
   }
   onCreate(){
     this.router.navigate(['organizations', 'add']);
+  }
+  onProjects(item){
+    this.router.navigate(['organizations', 'projects'],{ queryParams:{id: item.id}});
   }
 
 }

@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     if(this.authService.existToken()) this.router.navigate(['administration', 'workloads'])
     this.loginForm = this.formBuilder.group({
       user: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      contraseña: ['', [Validators.required]],
     })
   }
 

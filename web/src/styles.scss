@@ -48,3 +48,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .ngx-datatable.material .datatable-header .datatable-header-cell{
     color: white;
 }
+.table-flex td > *{
+    justify-content: center;
+    align-items: flex-end;
+    display: flex;
+}

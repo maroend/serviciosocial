@@ -1,0 +1,110 @@
+<h2>AGREGAR ORGANIZACIÓN</h2>
+<form [formGroup]="form">
+    <ng-template matStepLabel>DATOS GENERALES</ng-template>
+        <div class="form-full">
+            <mat-form-field class="form-control">
+                <input matInput formControlName="nombre" placeholder="NOMBRE DEL PROYECTO" required/>
+                <mat-error *ngIf="form.get('nombre').hasError('required')">Campo requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+                <textarea matInput formControlName="objetivo" placeholder="OBJETIVO" required></textarea>
+                <mat-error *ngIf="form.get('objetivo').hasError('required')">Campo requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+                <mat-select formControlName="idContacto" placeholder="CONTACTO" required>
+                    <mat-option *ngFor="let contacto of contactos" [value]="contacto.id">{{contacto.nombre}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+                <mat-select formControlName="idPeriodo" placeholder="PERIODO" required>
+                    <mat-option *ngFor="let periodo of periodos" [value]="periodo.id">{{periodo.periodo}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+                <mat-select formControlName="idRecursosEconomicos" placeholder="RECURSOS ECONÓMICOS ASIGNADOS" required>
+                    <mat-option *ngFor="let recurso of recursos" [value]="recurso.id">{{recurso.recursoEconomico}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+                <mat-select formControlName="idContabilizacionHoras" placeholder="CONTABILIZACIÓN DE HORAS" required>
+                    <mat-option *ngFor="let hora of horas" [value]="hora.id">{{hora.tipo}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+                <input matInput formControlName="horario" placeholder="HORARIO" required />
+                <mat-error *ngIf="form.get('horario').hasError('required')">Campo requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+                <textarea matInput formControlName="beneficiosInstitucionales" placeholder="BENEFICIOS INSTITUCIONALES" ></textarea>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+                <input matInput formControlName="horasProyecto" placeholder="HORAS DEL PROYECTO" />
+            </mat-form-field>
+            <mat-form-field class="form-control">
+                <input matInput formControlName="descripcionFormacion" placeholder="DESCRIPCIÓN" />
+            </mat-form-field>
+            <div class="form-control">
+                <label id="example-radio-group-label">¿RECIBE CONSTANCIA DE PARTICIPACIÓN?</label>
+                <mat-radio-group formControlName="constancia" aria-label="LEGIÓN?">
+                <mat-radio-button [value]="true">Sí</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <mat-form-field class="form-control">
+                <textarea matInput formControlName="descripcionBeneficiosAlumno" placeholder="DESCRIPCIÓN" ></textarea>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+                <textarea matInput formControlName="descripcionImpactoSocial" placeholder="DESCRIPCIÓN" ></textarea>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+                <textarea matInput formControlName="indicaciones" placeholder="INDICADORES" ></textarea>
+            </mat-form-field>
+            <mat-form-field class="form-control">
+                <input matInput type="number" formControlName="noAlumnosAutorizados" placeholder="ALUMNOS AUTORIZADOS" />
+            </mat-form-field>
+        </div>
+    <div>
+    </div>
+</form>
+<form class="inline-form" [formGroup]="formPlazas">
+    <table class="table-flex" style="width: 100%;">
+        <tr>
+            <th>Carrera</th>
+            <th>Requeridos</th>
+            <th>Actividades</th>
+            <th>Agregar</th>
+        </tr>
+        <tr>
+            <td>
+                <mat-form-field class="form-control">
+                    <mat-select formControlName="idCarrera" placeholder="CARRERA" required>
+                        <mat-option *ngFor="let carrera of carreras" [value]="carrera.id">{{carrera.carrera}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formPlazas.get('idCarrera').hasError('required')">Campo requerido</mat-error>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-control">
+                    <input matInput formControlName="requeridos" placeholder="ALUMNOS REQUERIDOS" required/>
+                    <mat-error *ngIf="formPlazas.get('requeridos').hasError('required')">Campo requerido</mat-error>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="form-control">
+                    <textarea matInput formControlName="actividades" placeholder="ACTIVIDADES" ></textarea>
+                    <mat-error *ngIf="formPlazas.get('actividades').hasError('required')">Campo requerido</mat-error>
+                </mat-form-field>
+            </td>
+            <td>
+                <button (click)="addPlaza()"  mat-flat-button color="accent">AGREGAR</button>
+            </td>
+        </tr>
+        <tr *ngFor="let plaza of listaPlazas">
+            <td>{{getCarrera(plaza.idCarrera)}}</td>
+            <td>{{plaza.requeridos}}</td>
+            <td>{{plaza.actividades}}</td>
+            <td><button (click)="removePlaza(plaza)" mat-flat-button color="accent">BORRAR</button></td>
+        </tr>
+    </table>
+</form>
+<button (click)="create()" mat-flat-button color="primary">GUARDAR</button>
