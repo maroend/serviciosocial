@@ -85,7 +85,7 @@
             </td>
             <td>
                 <mat-form-field class="form-control">
-                    <input matInput formControlName="requeridos" placeholder="ALUMNOS REQUERIDOS" required/>
+                    <input type="number" matInput formControlName="requeridos" placeholder="ALUMNOS REQUERIDOS" required/>
                     <mat-error *ngIf="formPlazas.get('requeridos').hasError('required')">Campo requerido</mat-error>
                 </mat-form-field>
             </td>

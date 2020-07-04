@@ -18,7 +18,7 @@ export class OrganizationProjectAddComponent implements OnInit {
   recursos = []
   horas = []
   carreras = []
-  organizationId = 0;
+  organizationId: number = 0;
   listaPlazas = [];
 
   constructor(
@@ -30,12 +30,13 @@ export class OrganizationProjectAddComponent implements OnInit {
     private router: Router
     ) { 
       this.route.queryParams.subscribe(params => {
-        this.organizationId = params['id'];
+        this.organizationId = params['id'] as number;
       });
     }
 
   ngOnInit(): void {
-
+    console.log(this.organizationId);
+    
     this.form = this.fb.group({
       nombre: new FormControl(''),
       objetivo: new FormControl(''),
@@ -68,7 +69,9 @@ export class OrganizationProjectAddComponent implements OnInit {
   create(){
     let model = this.form.value;
     model.listaPlazas = this.listaPlazas;
-    model.idOrganizacion = this.organizationId;
+    model.idOrganizacion = Number(this.organizationId);
+    console.log(model);
+    
     this.proyectoService.create(model).subscribe((res: any)=>{
       this.router.navigate(['organizations','projects'], {queryParams: {id: this.organizationId}});
     }, error=>{
