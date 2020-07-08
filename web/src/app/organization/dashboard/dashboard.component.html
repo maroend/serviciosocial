@@ -26,7 +26,8 @@
     </button>
     <mat-menu #menu="matMenu">
       <button (click)="onProjects(row)" mat-menu-item>Proyectos</button>
-      <button mat-menu-item>Editar</button>
+      <button (click)="onDetails(row)" mat-menu-item>Revisar</button>
+      <button (click)="onEdit(row)" mat-menu-item>Editar</button>
       <button mat-menu-item>Borrar</button>
     </mat-menu>
   </ng-container>

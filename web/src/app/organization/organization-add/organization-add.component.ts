@@ -4,7 +4,7 @@ import { SepomexService } from 'src/app/admin/services/sepomex.service';
 import { AreasService } from 'src/app/admin/services/areas.service';
 import { OrganizationService } from '../services/organization.service';
 import { RubrosService } from 'src/app/admin/services/rubros.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-organization-add',
@@ -30,15 +30,21 @@ export class OrganizationAddComponent implements OnInit {
   listaRubros = []
   displayedColumns: string[] = ['nombre', 'puesto', 'correo', 'borrar'];
   generos = ['Hombre', 'Mujer', 'Otro']
+  idOrganizacion = 0;
 
   constructor(
+    private route: ActivatedRoute,
     private fb: FormBuilder,
     private sepomexService: SepomexService,
     private areasService: AreasService,
     private rubrosService: RubrosService,
     private router: Router,
     private service: OrganizationService
-    ) { }
+    ) {
+      this.route.queryParams.subscribe(params => {
+        this.idOrganizacion = params['id'] as number;
+      });
+    }
 
   ngOnInit(): void {
     this.getAreas();
@@ -113,6 +119,9 @@ export class OrganizationAddComponent implements OnInit {
     this.formIntegrantes = this.fb.group({
       nombre: new FormControl('')
     });
+    console.log(this.idOrganizacion);
+    
+    if(this.idOrganizacion>0) this.getOrganizacion();
 
   }
 
@@ -142,6 +151,11 @@ export class OrganizationAddComponent implements OnInit {
         });
         this.areas = res;
       }
+    })
+  }
+  getOrganizacion(){
+    this.service.getById(this.idOrganizacion).subscribe((res: any) => {
+      this.buildData(res)
     })
   }
 
@@ -224,6 +238,70 @@ export class OrganizationAddComponent implements OnInit {
     if (index !== -1) {
         this.listaContactos.splice(index, 1);
     } 
+  }
+
+  buildData(data){
+    this.form1.setValue({
+      organizacion: data.organizacion,
+      web: data.web,
+      mision: data.mision,
+      descripcion: data.descripcion,
+      objetivo: data.objetivo,
+      legionario: data.legionario
+    });
+
+    if(data.responsable)
+    this.form7.setValue({
+      nombre: data.responsable.nombre,
+      apellidos: data.responsable.apellidos,
+      genero: data.responsable.genero,
+      puesto: data.responsable.puesto,
+      departamento: data.responsable.departamento,
+      disponible: data.responsable.disponible,
+      usuario: data.responsable.usuario,
+      contrasena: data.responsable.contrasena,
+      telefono: data.responsable.telefono,
+      correo: data.responsable.correo,
+    });
+
+    this.form2.setValue({
+      calle: data.calle,
+      colonia: data.colonia,
+      estado: data.estado,
+      cp: data.cp,
+      ciudad: data.ciudad,
+      municipio: data.municipio,
+      pais: data.pais,
+    });
+
+    this.form4.setValue({
+      ninos: data.ninos,
+      ancianos: data.ancianos,
+      mujeres: data.mujeres,
+      discapacitados: data.discapacitados,
+      jovenes: data.jovenes,
+      indigenas: data.indigenas,
+      otro: data.otro,
+      total: 0,
+    });
+    this.calculatePeople();
+
+    this.form5.setValue({
+      logros: data.logros,
+      reconocimiento: data.reconocimiento,
+    });
+
+    this.form6.get('rubroOtro').setValue(data.rubroOtro);
+    this.form3.get('areasDeAccionOtro').setValue(data.rubroOtro);
+
+    data.listaAreasAccion.forEach(element => {
+      this.form3.get('area'+element.idAreaAccion).setValue(element.id);
+    });
+    data.listaRubros.forEach(element => {
+      this.form6.get('rubro'+element.idRubro).setValue(element.id);
+    });
+    this.listaIntegrantes = data.listaIntegrantes
+    this.listaContactos = data.listaContactos
   }
 
 }

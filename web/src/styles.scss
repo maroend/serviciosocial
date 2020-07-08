@@ -53,3 +53,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     align-items: flex-end;
     display: flex;
 }
+.table-full{
+    width: 100%;
+}
+.table-details{
+    border-collapse: collapse;
+}
+.table-details td{
+    padding: 10px;
+    border: 2px solid white;
+}
+.table-details td.title{
+    font-weight: bold;
+}
+.table-details td.header{
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    text-align: center;
+    background-color: #111f2b;
+    color: white;
+}

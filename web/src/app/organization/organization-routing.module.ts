@@ -7,6 +7,8 @@ import { OrganizationEvaluationComponent } from './organization-evaluation/organ
 import { OrganizationHoursComponent } from './organization-hours/organization-hours.component';
 import { OrganizationProjectsComponent } from './organization-projects/organization-projects.component';
 import { OrganizationProjectAddComponent } from './organization-project-add/organization-project-add.component';
+import { OrganizationDetailComponent } from './organization-detail/organization-detail.component';
+import { OrganizationProjectDetailComponent } from './organization-project-detail/organization-project-detail.component';
 
 
 const routes: Routes = [{
@@ -23,6 +25,9 @@ const routes: Routes = [{
       path: 'add',
       component: OrganizationAddComponent
     },{
+      path: 'detail',
+      component: OrganizationDetailComponent
+    },{
       path: 'documents',
       component: OrganizationDocumentsComponent
     },{
@@ -37,6 +42,9 @@ const routes: Routes = [{
     },{
       path: 'project',
       component: OrganizationProjectAddComponent
+    },{
+      path: 'project-detail',
+      component: OrganizationProjectDetailComponent
     }
   ]
 }];

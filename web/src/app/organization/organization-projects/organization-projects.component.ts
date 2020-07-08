@@ -70,5 +70,11 @@ export class OrganizationProjectsComponent implements OnInit {
   onCreate(){
     this.router.navigate(['organizations','project'],{ queryParams:{id: this.organizationId}});
   }
+  onEdit(item){
+    this.router.navigate(['organizations','project'],{ queryParams:{id: this.organizationId, idProyecto: item.id}});
+  }
+  onDetails(item){
+    this.router.navigate(['organizations','project-detail'],{ queryParams:{id: item.id}});
+  }
 
 }

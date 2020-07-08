@@ -1,0 +1,172 @@
+<table class="table-details table-full" *ngIf="proyecto">
+    <tr>
+        <td class="title header" colspan="4">
+            Datos del proyecto
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            PROYECTO
+        </td>
+        <td>
+            {{proyecto.nombre}}
+        </td>
+        <td class="title">
+            INSTITUCION
+        </td>
+        <td>
+            {{proyecto.idOrganizacion}}
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            PERIODO
+        </td>
+        <td>
+            {{proyecto.idPeriodo}}
+        </td>
+        <td class="title">
+            RESPONSABLE
+        </td>
+        <td>
+            {{proyecto.idContacto}}
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            HORARIO
+        </td>
+        <td>
+            {{proyecto.horario}}
+        </td>
+        <td class="title">
+            OBJETIVO
+        </td>
+        <td>
+            {{proyecto.objetivo}}
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            BENEFICIOS INSTITUCIONALES
+        </td>
+        <td>
+            {{proyecto.beneficiosInstitucionales}}
+        </td>
+        <td class="title">
+            RECURSOS ECONOMICOS
+        </td>
+        <td>
+            {{proyecto.idRecursosEconomicos}}
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            VACANTES
+        </td>
+        <td>
+            {{proyecto.noAlumnosAutorizados}}
+        </td>
+        <td class="title">
+            HORAS PROYECTO
+        </td>
+        <td>
+            {{proyecto.horasProyecto}}
+        </td>
+    </tr>
+</table>
+<h2>&nbsp;</h2>
+<div class="three-columns">
+    <table class="table-details" *ngIf="proyecto">
+        <tr>
+            <td class="title header" colspan="2">
+                Formación/Capacitación para el Alumno
+            </td>
+        </tr>
+        <tr>
+            <td class="title">
+                FORMACIÓN
+            </td>
+            <td>
+                {{proyecto.descripcionFormacion}}
+            </td>
+        </tr>
+        <tr>
+            <td class="title">
+                CONSTANCIA
+            </td>
+            <td>
+                {{proyecto.constancia ? "SI": "NO"}}
+            </td>
+        </tr>
+    </table>
+    <table class="table-details" *ngIf="proyecto">
+        <tr>
+            <td class="title header" colspan="2">
+                Beneficios para el Alumno
+            </td>
+        </tr>
+        <tr>
+            <td class="title">
+                BENEFICIOS ALUMNO
+            </td>
+            <td>
+                {{proyecto.descripcionBeneficiosAlumno}}
+            </td>
+        </tr>
+    </table>
+    <table class="table-details" *ngIf="proyecto">
+        <tr>
+            <td class="title header" colspan="2">
+                Impacto social del proyecto
+            </td>
+        </tr>
+        <tr>
+            <td class="title">
+                IMPACTO SOCIAL
+            </td>
+            <td>
+                {{proyecto.descripcionImpactoSocial}}
+            </td>
+        </tr>
+        <tr>
+            <td class="title">
+                INDICADORES
+            </td>
+            <td>
+                {{proyecto.indicaciones}}
+            </td>
+        </tr>
+    </table>
+</div>
+<h2>&nbsp;</h2>
+
+<table class="table-details table-full" *ngIf="proyecto">
+    <tr>
+        <td class="title header" colspan="3">
+            CONTACTOS
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            Carrera
+        </td>
+        <td class="title">
+            Requeridos
+        </td>
+        <td class="title">
+            Actividades
+        </td>
+    </tr>
+    <tr *ngFor="let plaza of proyecto.listaPlazas">
+        <td>
+            {{plaza.idCarrera}}
+        </td>
+        <td>
+            {{plaza.requeridos}}
+        </td>
+        <td>
+            {{plaza.actividades}}
+        </td>
+    </tr>
+</table>

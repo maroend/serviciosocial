@@ -25,8 +25,8 @@
         <mat-icon>keyboard_arrow_down</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>Proyectos</button>
-        <button mat-menu-item>Editar</button>
+        <button (click)="onDetails(row)" mat-menu-item>Detalles</button>
+        <button (click)="onEdit(row)" mat-menu-item>Editar</button>
         <button mat-menu-item>Borrar</button>
       </mat-menu>
     </ng-container>

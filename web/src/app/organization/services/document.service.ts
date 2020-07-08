@@ -6,17 +6,21 @@ import { Utils } from 'src/app/shared/functions/utils';
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectService {
-  private api = `${environment.api}Proyectos`
+export class DocumentService {
+  private api = `${environment.api}`
 
   constructor(private http: HttpClient, private utils: Utils) { }
 
-  getProjects(model){
-    const uri = `${this.api}/GetByIdOrganizacion?${this.utils.getAll(model)}`
-    return this.http.get(uri);
+  getDocuments(id){
+    const uri = `${this.api}Documentos/getDocumentoByConfiguracion?configuracion=${id}`
+    return this.http.post(uri, null);
   }
-  getById(id){
-    const uri = `${this.api}/${id}`
+  getDocumentsByOrganization(id){
+    const uri = `${this.api}DocumentosOrganizaciones/getDocumentoByIdOrganizacion?idOrganizacion=${id}`
+    return this.http.post(uri, null);
+  }
+  getDocumentsStatus(){
+    const uri = `${this.api}EstadosDocumentos`
     return this.http.get(uri);
   }
 

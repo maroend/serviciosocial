@@ -1,0 +1,262 @@
+<table class="table-details table-full" *ngIf="organizacion">
+    <tr>
+        <td class="title header" colspan="4">
+            Datos de la Organización
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            Empresa/Organización
+        </td>
+        <td>
+            {{organizacion.organizacion}}
+        </td>
+        <td class="title">
+            Responsable
+        </td>
+        <td>
+            {{organizacion.responsable && organizacion.responsable.nombre}}
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            Misión
+        </td>
+        <td>
+            {{organizacion.mision}}
+        </td>
+        <td class="title">
+            País
+        </td>
+        <td>
+            {{organizacion.pais}}
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            Objetivo
+        </td>
+        <td>
+            {{organizacion.objetivo}}
+        </td>
+        <td class="title">
+            Calle
+        </td>
+        <td>
+            {{organizacion.calle}}
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            Logros
+        </td>
+        <td>
+            {{organizacion.logros}}
+        </td>
+        <td class="title">
+            Colonia
+        </td>
+        <td>
+            {{organizacion.colonia}}
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            Descripción
+        </td>
+        <td>
+            {{organizacion.descripcion}}
+        </td>
+        <td class="title">
+            Estado
+        </td>
+        <td>
+            {{organizacion.estado}}
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            Legionario
+        </td>
+        <td>
+            {{organizacion.legionario ? "SI" : "NO"}}
+        </td>
+        <td class="title">
+            C.P.
+        </td>
+        <td>
+            {{organizacion.cp}}
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            Reconocimientos
+        </td>
+        <td>
+            {{organizacion.reconocimiento}}
+        </td>
+        <td class="title">
+            Delegación o Municipio
+        </td>
+        <td>
+            {{organizacion.municipio}}
+        </td>
+    </tr>
+    <tr>
+        <td class="title">
+            Página Web
+        </td>
+        <td>
+            {{organizacion.web}}
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+<h2>&nbsp;</h2>
+<div class="two-columns">
+    <table class="table-details" *ngIf="organizacion">
+        <tr>
+            <td class="title header" colspan="2">
+                AREAS DE ACCION
+            </td>
+        </tr>
+        <tr *ngFor="let area of organizacion.listaAreasAccion">
+            <td class="title">
+                {{area.idAreaAccion}}
+            </td>
+            <td>
+                {{area.nombre}}
+            </td>
+        </tr>
+    </table>
+    <table class="table-details" *ngIf="organizacion">
+        <tr>
+            <td class="title header" colspan="2">
+                NÚMERO DE PERSONAS QUE ATIENDEN
+            </td>
+        </tr>
+        <tr>
+            <td class="title">
+                Ancianos
+            </td>
+            <td>
+                {{organizacion.ancianos}}
+            </td>
+        </tr>
+        <tr>
+            <td class="title">
+                Discapacitados
+            </td>
+            <td>
+                {{organizacion.discapacitados}}
+            </td>
+        </tr>
+        <tr>
+            <td class="title">
+                Indígenas
+            </td>
+            <td>
+                {{organizacion.indigenas}}
+            </td>
+        </tr>
+        <tr>
+            <td class="title">
+                Jóvenes
+            </td>
+            <td>
+                {{organizacion.jovenes}}
+            </td>
+        </tr>
+        <tr>
+            <td class="title">
+                Mujeres
+            </td>
+            <td>
+                {{organizacion.mujeres}}
+            </td>
+        </tr>
+        <tr>
+            <td class="title">
+                Niños
+            </td>
+            <td>
+                {{organizacion.ninos}}
+            </td>
+        </tr>
+        <tr>
+            <td class="title">
+                Otro
+            </td>
+            <td>
+                {{organizacion.otro}}
+            </td>
+        </tr>
+    </table>
+</div>
+<h2>&nbsp;</h2>
+<div class="two-columns">
+    <table class="table-details" *ngIf="organizacion">
+        <tr>
+            <td class="title header" colspan="2">
+                Rubros
+            </td>
+        </tr>
+        <tr *ngFor="let rubro of organizacion.listaRubros">
+            <td class="title">
+                {{rubro.idRubro}}
+            </td>
+            <td>
+                {{rubro.nombre}}
+            </td>
+        </tr>
+    </table>
+    <table class="table-details" *ngIf="organizacion">
+        <tr>
+            <td class="title header" colspan="5">
+                CONTACTOS
+            </td>
+        </tr>
+        <tr *ngFor="let contacto of organizacion.listaContactos">
+            <td>
+                {{contacto.prefijo}} {{contacto.nombre}}
+            </td>
+            <td>
+                {{contacto.puesto}}
+            </td>
+            <td>
+                {{contacto.correo}}
+            </td>
+            <td>
+                {{contacto.telefono}} {{contacto.ext ? "Ext." : ""}} {{contacto.ext}}
+            </td>
+            <td>
+                {{contacto.celular}}
+            </td>
+        </tr>
+    </table>
+</div>
+<h2>&nbsp;</h2>
+<table class="table-details table-full" *ngIf="organizacion">
+    <tr>
+        <td class="title header" [attr.colspan]="documentosEstados.length+1">
+            DOCUMENTOS ENTREGADOS
+        </td>
+    </tr>
+    <tr>
+        <td class="title">Documento</td>
+        <td class="title" *ngFor="let status of documentosEstados">
+            {{status.estado}}
+        </td>
+    </tr>
+    <tr *ngFor="let doc of documentos">
+        <td class="title">
+            {{doc.documento}}
+        </td>
+        <td *ngFor="let status of documentosEstados">
+            {{getDocumentoEstatus(doc.id) ? 'X' : ''}}
+        </td>
+    </tr>
+</table>

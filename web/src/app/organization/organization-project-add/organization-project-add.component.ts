@@ -19,6 +19,7 @@ export class OrganizationProjectAddComponent implements OnInit {
   horas = []
   carreras = []
   organizationId: number = 0;
+  projectId: number = 0;
   listaPlazas = [];
 
   constructor(
@@ -31,6 +32,7 @@ export class OrganizationProjectAddComponent implements OnInit {
     ) { 
       this.route.queryParams.subscribe(params => {
         this.organizationId = params['id'] as number;
+        this.projectId = params['idProyecto'] as number;
       });
     }
 
@@ -64,6 +66,7 @@ export class OrganizationProjectAddComponent implements OnInit {
     this.getRecursos();
     this.getHoras();
     this.getCarreras();
+    if(this.projectId>0) this.getProyecto();
   }
 
   create(){
@@ -82,6 +85,12 @@ export class OrganizationProjectAddComponent implements OnInit {
   getOrganizacion(){
     this.service.getById(this.organizationId).subscribe((res: any)=>{
       this.contactos = res.listaContactos;
+    })
+  }
+
+  getProyecto(){
+    this.proyectoService.getById(this.projectId).subscribe((res: any[])=>{
+      this.buildData(res);
     })
   }
 
@@ -125,6 +134,30 @@ export class OrganizationProjectAddComponent implements OnInit {
     if (index !== -1) {
         this.listaPlazas.splice(index, 1);
     } 
+  }
+
+
+  buildData(data){
+    console.log(data);
+    
+    this.form = this.fb.group({
+      nombre: data.nombre,
+      objetivo: data.objetivo,
+      idContacto: data.idContacto,
+      idPeriodo: data.idPeriodo,
+      idRecursosEconomicos: data.idRecursosEconomicos,
+      idContabilizacionHoras: data.idContabilizacionHoras,
+      horario: data.horario,
+      beneficiosInstitucionales: data.beneficiosInstitucionales,
+      horasProyecto: data.horasProyecto,
+      descripcionFormacion: data.descripcionFormacion,
+      constancia: data.constancia,
+      descripcionBeneficiosAlumno: data.descripcionBeneficiosAlumno,
+      descripcionImpactoSocial: data.descripcionImpactoSocial,
+      indicaciones: data.indicaciones,
+      noAlumnosAutorizados: data.noAlumnosAutorizados,
+    });
+    this.listaPlazas = data.listaPlazas
   }
 
 }

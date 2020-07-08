@@ -21,7 +21,7 @@ export class OrganizationService {
   }
 
   getById(id){
-    const uri = `${this.api}/${id}`;
+    const uri = `${this.api}/GetWithDetails?idOrganizacion=${id}`;
     return this.http.get(uri);
   }
 
