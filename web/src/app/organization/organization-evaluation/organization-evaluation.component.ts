@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { OrganizationService } from '../services/organization.service';
+import { CatalogosService } from 'src/app/admin/services/catalogos.service';
+import { EvaluationService } from '../services/evaluation.service';
+import { ProjectService } from '../services/project.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-organization-evaluation',
@@ -8,7 +12,7 @@ import { OrganizationService } from '../services/organization.service';
   styleUrls: ['./organization-evaluation.component.scss']
 })
 export class OrganizationEvaluationComponent implements OnInit {
-
+  idOrganizacion = 0;
   periodos = [];
   proyectos = [];
   alumnos = [];
@@ -21,64 +25,66 @@ export class OrganizationEvaluationComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private service: OrganizationService
-    ) { }
+    private service: EvaluationService,
+    private catalogoService: CatalogosService,
+    private router: Router,
+    private proyectoService: ProjectService,
+    private route: ActivatedRoute,
+    ) { 
+      this.route.queryParams.subscribe(params => {
+        this.idOrganizacion = params['id'];
+      });
+  }
 
   ngOnInit(): void {
     this.getPeriodos()
-    this.getProyectos()
     this.getAlumnos()
-    this.preguntas.push({
-      nombre: "p1",
-      pregunta: "Los proyectos realizados por el alumno tuvieron un impacto positivo en la fundación"
-    })
-    this.preguntas.push({
-      nombre: "p2",
-      pregunta: "Es respetuoso y proyecta actitudes positivas"
-    })
-    this.preguntas.push({
-      nombre: "p3",
-      pregunta: "Los proyectos realizados por el alumno tuvieron un impacto positivo en la fundación"
-    })
-    this.preguntas.push({
-      nombre: "p4",
-      pregunta: "Es respetuoso y proyecta actitudes positivas"
-    })
-    this.preguntas.push({
-      nombre: "p5",
-      pregunta: "Los proyectos realizados por el alumno tuvieron un impacto positivo en la fundación"
-    })
-    this.preguntas.push({
-      nombre: "p6",
-      pregunta: "Es respetuoso y proyecta actitudes positivas"
-    })
+    this.getPreguntas()
   }
 
   getPeriodos(){
-    this.service.getTerms().subscribe((res: any[])=>{
+    this.catalogoService.getPeriodos().subscribe((res: any[])=>{
       this.periodos = res;
     })
   }
 
   getProyectos(){
-    this.service.getProjects().subscribe((res: any[])=>{
+    this.proyectoService.getByPeriodo(this.periodo).subscribe((res: any[])=>{
       this.proyectos = res;
     })
   }
 
   getAlumnos(){
-    this.service.getStudents().subscribe((res: any[])=>{
+    this.service.getAlumnos().subscribe((res: any[])=>{
       this.alumnos = res;
     })
   }
 
   getPreguntas(){
-    this.service.getQuestions().subscribe((res: any[])=>{
+    this.service.getPreguntas().subscribe((res: any[])=>{
       this.preguntas = res;
     })
   }
+  get isValid(){
+    let valid = true;
+    if(!this.alumno) valid = false;
+    if(!this.periodo) valid = false;
+    if(!this.proyecto) valid = false;
+    this.preguntas.forEach(x=> {if(!x.respuesta)valid = false})
+    return valid;
+  }
   save(){
-    console.log(this.respuestas);
+    this.preguntas.forEach(x=> {
+      x.idPeriodo = this.periodo,
+      x.idProyecto = this.proyecto,
+      x.idAlumno = this.alumno,
+      x.idPregunta = x.id
+    })
+    this.service.addEvaluacion(this.preguntas).subscribe((res: any)=>{
+      this.router.navigate(['organizations','home']);
+    }, error=>{
+      alert(error.error)
+    })
     
   }
 

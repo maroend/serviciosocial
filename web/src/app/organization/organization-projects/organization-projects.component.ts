@@ -76,5 +76,8 @@ export class OrganizationProjectsComponent implements OnInit {
   onDetails(item){
     this.router.navigate(['organizations','project-detail'],{ queryParams:{id: item.id}});
   }
+  onAddHours(item){
+    this.router.navigate(['organizations', 'hours'],{ queryParams:{id: item.id}});
+  }
 
 }

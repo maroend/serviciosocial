@@ -74,9 +74,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['organizations', 'detail'],{ queryParams:{id: item.id}});
   }
   onEdit(item){
-    console.log(item);
-    
     this.router.navigate(['organizations', 'add'],{ queryParams:{id: item.id}});
+  }
+  onEvaluation(item){
+    this.router.navigate(['organizations', 'evaluation'],{ queryParams:{id: item.id}});
   }
 
 }
